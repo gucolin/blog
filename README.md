@@ -98,6 +98,9 @@ Also, you get to save yourself a lot of wasted time and headaches by deploying a
 [Other options](http://support.ghost.org/deploying-ghost/) are available if you prefer playing around with servers by yourself.
 
 
+# Deploy on Heroku
+[Documentation](http://www.howtoinstallghost.com/how-to-install-ghost-on-heroku/)
+
 # Staying Up to Date
 
 When a new version of Ghost comes out, you'll want to look over these [upgrade instructions](http://support.ghost.org/how-to-upgrade/) for what to do next.
