@@ -1,6 +1,5 @@
 var _               = require('lodash'),
     Promise         = require('bluebird'),
-    crypto          = require('crypto'),
     sequence        = require('../../utils/sequence'),
     path            = require('path'),
     fs              = require('fs'),
@@ -20,7 +19,6 @@ var _               = require('lodash'),
     logInfo,
     populateDefaultSettings,
     backupDatabase,
-    fixClientSecret,
 
     // public
     init,
@@ -35,7 +33,7 @@ logInfo = function logInfo(message) {
 populateDefaultSettings = function populateDefaultSettings() {
     // Initialise the default settings
     logInfo('Populating default settings');
-    return models.Settings.populateDefaults().then(function () {
+    return models.Settings.populateDefault('databaseVersion').then(function () {
         logInfo('Complete');
     });
 };
@@ -50,19 +48,6 @@ backupDatabase = function backupDatabase() {
             return Promise.promisify(fs.writeFile)(fileName, JSON.stringify(exportedData)).then(function () {
                 logInfo('Database backup written to: ' + fileName);
             });
-        });
-    });
-};
-
-// TODO: move to migration.to005() for next DB version
-fixClientSecret = function () {
-    return models.Clients.forge().query('where', 'secret', '=', 'not_available').fetch().then(function updateClients(results) {
-        return Promise.map(results.models, function mapper(client) {
-            if (process.env.NODE_ENV.indexOf('testing') !== 0) {
-                logInfo('Updating client secret');
-                client.secret = crypto.randomBytes(6).toString('hex');
-            }
-            return models.Client.edit(client, {context: {internal: true}, id: client.id});
         });
     });
 };
@@ -93,8 +78,7 @@ init = function (tablesOnly) {
         if (databaseVersion === defaultVersion) {
             // 1. The database exists and is up-to-date
             logInfo('Up to date at version ' + databaseVersion);
-            // TODO: temporary fix for missing client.secret
-            return fixClientSecret();
+            return;
         }
 
         if (databaseVersion > defaultVersion) {
@@ -194,11 +178,9 @@ migrateUp = function (fromVersion, toVersion) {
             return sequence(migrateOps);
         }
     }).then(function () {
-        // Ensure all of the current default settings are created (these are fixtures, so should be inserted first)
-        return populateDefaultSettings();
-    }).then(function () {
-        // Finally, run any updates to the fixtures, including default settings
         return fixtures.update(fromVersion, toVersion);
+    }).then(function () {
+        return populateDefaultSettings();
     });
 };
 

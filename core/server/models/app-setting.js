@@ -5,7 +5,7 @@ var ghostBookshelf = require('./base'),
 AppSetting = ghostBookshelf.Model.extend({
     tableName: 'app_settings',
 
-    app: function app() {
+    app: function () {
         return this.belongsTo('App');
     }
 });

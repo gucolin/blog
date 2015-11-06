@@ -3,9 +3,7 @@
 var Promise         = require('bluebird'),
     canThis         = require('../permissions').canThis,
     dataProvider    = require('../models'),
-    pipeline        = require('../utils/pipeline'),
-    utils           = require('./utils'),
-    docName         = 'roles',
+    errors          = require('../errors'),
 
     roles;
 
@@ -29,46 +27,29 @@ roles = {
      * @returns {Promise(Roles)} Roles Collection
      */
     browse: function browse(options) {
-        var permittedOptions = ['permissions'],
-            tasks;
+        options = options || {};
 
-        /**
-         * ### Model Query
-         * Make the call to the Model layer
-         * @param {Object} options
-         * @returns {Object} options
-         */
-        function modelQuery(options) {
-            return dataProvider.Role.findAll(options);
-        }
+        return canThis(options.context).browse.role().then(function () {
+            return dataProvider.Role.findAll(options).then(function (results) {
+                var roles = results.map(function (r) {
+                    return r.toJSON();
+                });
 
-        // Push all of our tasks into a `tasks` array in the correct order
-        tasks = [
-            utils.validate(docName, {opts: permittedOptions}),
-            utils.handlePermissions(docName, 'browse'),
-            modelQuery
-        ];
+                if (options.permissions !== 'assign') {
+                    return {roles: roles};
+                }
 
-        // Pipeline calls each task passing the result of one to be the arguments for the next
-        return pipeline(tasks, options).then(function formatResponse(results) {
-            var roles = results.map(function (r) {
-                return r.toJSON();
-            });
-
-            if (options.permissions !== 'assign') {
-                return {roles: roles};
-            }
-
-            return Promise.filter(roles.map(function (role) {
-                return canThis(options.context).assign.role(role)
+                return Promise.filter(roles.map(function (role) {
+                    return canThis(options.context).assign.role(role)
                     .return(role)
                     .catch(function () {});
-            }), function (value) {
-                return value && value.name !== 'Owner';
-            }).then(function (roles) {
-                return {roles: roles};
+                }), function (value) {
+                    return value && value.name !== 'Owner';
+                }).then(function (roles) {
+                    return {roles: roles};
+                });
             });
-        });
+        }).catch(errors.logAndThrowError);
     }
 };
 

@@ -5,7 +5,7 @@ var ghostBookshelf = require('./base'),
 App = ghostBookshelf.Model.extend({
     tableName: 'apps',
 
-    saving: function saving(newPage, attr, options) {
+    saving: function (newPage, attr, options) {
         /*jshint unused:false*/
         var self = this;
 
@@ -15,17 +15,17 @@ App = ghostBookshelf.Model.extend({
             // Pass the new slug through the generator to strip illegal characters, detect duplicates
             return ghostBookshelf.Model.generateSlug(App, this.get('slug') || this.get('name'),
                 {transacting: options.transacting})
-                .then(function then(slug) {
+                .then(function (slug) {
                     self.set({slug: slug});
                 });
         }
     },
 
-    permissions: function permissions() {
+    permissions: function () {
         return this.belongsToMany('Permission', 'permissions_apps');
     },
 
-    settings: function settings() {
+    settings: function () {
         return this.belongsToMany('AppSetting', 'app_settings');
     }
 }, {
@@ -34,7 +34,7 @@ App = ghostBookshelf.Model.extend({
     * @param {String} methodName The name of the method to check valid options for.
     * @return {Array} Keys allowed in the `options` hash of the model's method.
     */
-    permittedOptions: function permittedOptions(methodName) {
+    permittedOptions: function (methodName) {
         var options = ghostBookshelf.Model.permittedOptions(),
 
             // whitelists for the `options` hash argument on methods, by method name.

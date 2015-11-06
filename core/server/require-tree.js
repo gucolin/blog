@@ -1,5 +1,3 @@
-// # Require Tree
-// Require a tree of directories - used for loading themes and other things
 var _        = require('lodash'),
     fs       = require('fs'),
     path     = require('path'),

@@ -3,7 +3,7 @@ var express     = require('express'),
     api         = require('../api'),
     apiRoutes;
 
-apiRoutes = function apiRoutes(middleware) {
+apiRoutes = function (middleware) {
     var router = express.Router();
     // alias delete with del
     router.del = router.delete;
@@ -39,16 +39,12 @@ apiRoutes = function apiRoutes(middleware) {
     // ## Tags
     router.get('/tags', api.http(api.tags.browse));
     router.get('/tags/:id', api.http(api.tags.read));
-    router.get('/tags/slug/:slug', api.http(api.tags.read));
     router.post('/tags', api.http(api.tags.add));
     router.put('/tags/:id', api.http(api.tags.edit));
     router.del('/tags/:id', api.http(api.tags.destroy));
 
     // ## Roles
     router.get('/roles/', api.http(api.roles.browse));
-
-    // ## Clients
-    router.get('/clients/slug/:slug', api.http(api.clients.read));
 
     // ## Slugs
     router.get('/slugs/:type/:name', api.http(api.slugs.generate));
@@ -73,27 +69,24 @@ apiRoutes = function apiRoutes(middleware) {
 
     // ## Authentication
     router.post('/authentication/passwordreset',
-        middleware.spamPrevention.forgotten,
+        middleware.spamForgottenPrevention,
         api.http(api.authentication.generateResetToken)
     );
     router.put('/authentication/passwordreset', api.http(api.authentication.resetPassword));
     router.post('/authentication/invitation', api.http(api.authentication.acceptInvitation));
     router.get('/authentication/invitation', api.http(api.authentication.isInvitation));
     router.post('/authentication/setup', api.http(api.authentication.setup));
-    router.put('/authentication/setup', api.http(api.authentication.updateSetup));
     router.get('/authentication/setup', api.http(api.authentication.isSetup));
     router.post('/authentication/token',
-        middleware.spamPrevention.signin,
-        middleware.api.authenticateClient,
-        middleware.api.generateAccessToken
+        middleware.spamSigninPrevention,
+        middleware.addClientSecret,
+        middleware.authenticateClient,
+        middleware.generateAccessToken
     );
     router.post('/authentication/revoke', api.http(api.authentication.revoke));
 
     // ## Uploads
     router.post('/uploads', middleware.busboy, api.http(api.uploads.add));
-
-    // API Router middleware
-    router.use(middleware.api.errorHandler);
 
     return router;
 };

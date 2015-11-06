@@ -5,7 +5,6 @@ var Settings,
     errors         = require('../errors'),
     Promise        = require('bluebird'),
     validation     = require('../data/validation'),
-    events         = require('../events'),
     internal       = {context: {internal: true}},
 
     defaultSettings;
@@ -17,8 +16,8 @@ function parseDefaultSettings() {
     var defaultSettingsInCategories = require('../data/default-settings.json'),
         defaultSettingsFlattened = {};
 
-    _.each(defaultSettingsInCategories, function each(settings, categoryName) {
-        _.each(settings, function each(setting, settingName) {
+    _.each(defaultSettingsInCategories, function (settings, categoryName) {
+        _.each(settings, function (setting, settingName) {
             setting.type = categoryName;
             setting.key = settingName;
 
@@ -43,39 +42,18 @@ Settings = ghostBookshelf.Model.extend({
 
     tableName: 'settings',
 
-    defaults: function defaults() {
+    defaults: function () {
         return {
             uuid: uuid.v4(),
             type: 'core'
         };
     },
 
-    emitChange: function emitChange(event) {
-        events.emit('settings' + '.' + event, this);
-    },
-
-    initialize: function initialize() {
-        ghostBookshelf.Model.prototype.initialize.apply(this, arguments);
-
-        this.on('created', function (model) {
-            model.emitChange('added');
-            model.emitChange(model.attributes.key + '.' + 'added');
-        });
-        this.on('updated', function (model) {
-            model.emitChange('edited');
-            model.emitChange(model.attributes.key + '.' + 'edited');
-        });
-        this.on('destroyed', function (model) {
-            model.emitChange('deleted');
-            model.emitChange(model.attributes.key + '.' + 'deleted');
-        });
-    },
-
-    validate: function validate() {
+    validate: function () {
         var self = this,
             setting = this.toJSON();
 
-        return validation.validateSchema(self.tableName, setting).then(function then() {
+        return validation.validateSchema(self.tableName, setting).then(function () {
             return validation.validateSettings(getDefaultSettings(), self);
         }).then(function () {
             var themeName = setting.value || '';
@@ -88,7 +66,7 @@ Settings = ghostBookshelf.Model.extend({
         });
     },
 
-    saving: function saving() {
+    saving: function () {
         // disabling sanitization until we can implement a better version
         // All blog setting keys that need their values to be escaped.
         // if (this.get('type') === 'blog' && _.contains(['title', 'description', 'email'], this.get('key'))) {
@@ -124,18 +102,9 @@ Settings = ghostBookshelf.Model.extend({
 
             item = self.filterData(item);
 
-            return Settings.forge({key: item.key}).fetch(options).then(function then(setting) {
-                var saveData = {};
-
+            return Settings.forge({key: item.key}).fetch(options).then(function (setting) {
                 if (setting) {
-                    if (item.hasOwnProperty('value')) {
-                        saveData.value = item.value;
-                    }
-                    // Internal context can overwrite type (for fixture migrations)
-                    if (options.context.internal && item.hasOwnProperty('type')) {
-                        saveData.type = item.type;
-                    }
-                    return setting.save(saveData, options);
+                    return setting.save({value: item.value}, options);
                 }
 
                 return Promise.reject(new errors.NotFoundError('Unable to find setting to update: ' + item.key));
@@ -148,7 +117,7 @@ Settings = ghostBookshelf.Model.extend({
             return Promise.reject(new errors.NotFoundError('Unable to find default setting: ' + key));
         }
 
-        return this.findOne({key: key}).then(function then(foundSetting) {
+        return this.findOne({key: key}).then(function (foundSetting) {
             if (foundSetting) {
                 return foundSetting;
             }
@@ -160,12 +129,12 @@ Settings = ghostBookshelf.Model.extend({
         });
     },
 
-    populateDefaults: function populateDefaults() {
-        return this.findAll().then(function then(allSettings) {
-            var usedKeys = allSettings.models.map(function mapper(setting) { return setting.get('key'); }),
+    populateDefaults: function () {
+        return this.findAll().then(function (allSettings) {
+            var usedKeys = allSettings.models.map(function (setting) { return setting.get('key'); }),
                 insertOperations = [];
 
-            _.each(getDefaultSettings(), function each(defaultSetting, defaultSettingKey) {
+            _.each(getDefaultSettings(), function (defaultSetting, defaultSettingKey) {
                 var isMissingFromDB = usedKeys.indexOf(defaultSettingKey) === -1;
                 // Temporary code to deal with old databases with currentVersion settings
                 if (defaultSettingKey === 'databaseVersion' && usedKeys.indexOf('currentVersion') !== -1) {

@@ -29,7 +29,7 @@ prevNext =  function (options) {
     options = options || {};
 
     var apiOptions = {
-        include: options.name === 'prev_post' ? 'previous,previous.author,previous.tags' : 'next,next.author,next.tags'
+        include: options.name === 'prev_post' ? 'previous' : 'next'
     };
 
     if (schema.isPost(this) && this.status === 'published') {

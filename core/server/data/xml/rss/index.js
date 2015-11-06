@@ -14,16 +14,20 @@ var _        = require('lodash'),
     getFeedXml,
     feedCache = {};
 
+function isPaginated(req) {
+    return req.route.path.indexOf(':page') !== -1;
+}
+
 function isTag(req) {
-    return req.originalUrl.indexOf('/' + config.routeKeywords.tag + '/') !== -1;
+    return req.route.path.indexOf('/' + config.routeKeywords.tag + '/') !== -1;
 }
 
 function isAuthor(req) {
-    return req.originalUrl.indexOf('/' + config.routeKeywords.author + '/') !== -1;
+    return req.route.path.indexOf('/' + config.routeKeywords.author + '/') !== -1;
 }
 
 function handleError(next) {
-    return function handleError(err) {
+    return function (err) {
         return next(err);
     };
 }
@@ -49,9 +53,8 @@ function getData(options) {
     };
 
     return Promise.props(ops).then(function (result) {
-        var titleStart = '';
-        if (options.tag) { titleStart = result.results.meta.filters.tags[0].name + ' - ' || ''; }
-        if (options.author) { titleStart = result.results.meta.filters.author.name + ' - ' || ''; }
+        var titleStart = options.tags ? result.results.meta.filters.tags[0].name + ' - ' :
+                options.author ? result.results.meta.filters.author.name + ' - ' : '';
 
         return {
             title: titleStart + result.title.settings[0].value,
@@ -79,8 +82,8 @@ function getBaseUrl(req, slugParam) {
 function processUrls(html, siteUrl, itemUrl) {
     var htmlContent = cheerio.load(html, {decodeEntities: false});
     // convert relative resource urls to absolute
-    ['href', 'src'].forEach(function forEach(attributeName) {
-        htmlContent('[' + attributeName + ']').each(function each(ix, el) {
+    ['href', 'src'].forEach(function (attributeName) {
+        htmlContent('[' + attributeName + ']').each(function (ix, el) {
             var baseUrl,
                 attributeValue,
                 parsed;
@@ -96,11 +99,6 @@ function processUrls(html, siteUrl, itemUrl) {
                 if (parsed.protocol) {
                     return;
                 }
-
-                // Do not convert protocol relative URLs
-                if (attributeValue.lastIndexOf('//', 0) === 0) {
-                    return;
-                }
             } catch (e) {
                 return;
             }
@@ -110,7 +108,18 @@ function processUrls(html, siteUrl, itemUrl) {
             // if the relative URL begins with a '/' use the blog URL (including sub-directory)
             // as the base URL, otherwise use the post's URL.
             baseUrl = attributeValue[0] === '/' ? siteUrl : itemUrl;
-            attributeValue = config.urlJoin(baseUrl, attributeValue);
+
+            // prevent double subdirectories
+            if (attributeValue.indexOf(config.paths.subdir) === 0) {
+                attributeValue = attributeValue.replace(config.paths.subdir, '');
+            }
+
+            // prevent double slashes
+            if (baseUrl.slice(-1) === '/' && attributeValue[0] === '/') {
+                attributeValue = attributeValue.substr(1);
+            }
+
+            attributeValue = baseUrl + attributeValue;
             el.attr(attributeName, attributeValue);
         });
     });
@@ -118,7 +127,7 @@ function processUrls(html, siteUrl, itemUrl) {
     return htmlContent;
 }
 
-getFeedXml = function getFeedXml(path, data) {
+getFeedXml = function (path, data) {
     var dataHash = crypto.createHash('md5').update(JSON.stringify(data)).digest('hex');
     if (!feedCache[path] || feedCache[path].hash !== dataHash) {
         // We need to regenerate
@@ -131,7 +140,7 @@ getFeedXml = function getFeedXml(path, data) {
     return feedCache[path].xml;
 };
 
-generateFeed = function generateFeed(data) {
+generateFeed = function (data) {
     var feed = new RSS({
         title: data.title,
         description: data.description,
@@ -145,7 +154,7 @@ generateFeed = function generateFeed(data) {
         }
     });
 
-    data.results.posts.forEach(function forEach(post) {
+    data.results.posts.forEach(function (post) {
         var itemUrl = config.urlFor('post', {post: post, permalinks: data.permalinks, secure: data.secure}, true),
             htmlContent = processUrls(post.html, data.siteUrl, itemUrl),
             item = {
@@ -184,17 +193,15 @@ generateFeed = function generateFeed(data) {
             }
         });
 
-        filters.doFilter('rss.item', item, post).then(function then(item) {
-            feed.item(item);
-        });
+        feed.item(item);
     });
 
-    return filters.doFilter('rss.feed', feed).then(function then(feed) {
+    return filters.doFilter('rss.feed', feed).then(function (feed) {
         return feed.xml();
     });
 };
 
-generate = function generate(req, res, next) {
+generate = function (req, res, next) {
     // Initialize RSS
     var pageParam = req.params.page !== undefined ? parseInt(req.params.page, 10) : 1,
         slugParam = req.params.slug,
@@ -202,11 +209,11 @@ generate = function generate(req, res, next) {
         options   = getOptions(req, pageParam, slugParam);
 
     // No negative pages, or page 1
-    if (isNaN(pageParam) || pageParam < 1 || (req.params.page !== undefined && pageParam === 1)) {
+    if (isNaN(pageParam) || pageParam < 1 || (pageParam === 1 && isPaginated(req))) {
         return res.redirect(baseUrl);
     }
 
-    return getData(options).then(function then(data) {
+    return getData(options).then(function (data) {
         var maxPage = data.results.meta.pagination.pages;
 
         // If page is greater than number of pages we have, redirect to last page
@@ -219,7 +226,7 @@ generate = function generate(req, res, next) {
         data.feedUrl = config.urlFor({relativeUrl: baseUrl, secure: req.secure}, true);
         data.secure = req.secure;
 
-        return getFeedXml(req.originalUrl, data).then(function then(feedXml) {
+        return getFeedXml(req.route.path, data).then(function (feedXml) {
             res.set('Content-Type', 'text/xml; charset=UTF-8');
             res.send(feedXml);
         });

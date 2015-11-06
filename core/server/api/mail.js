@@ -1,6 +1,6 @@
 // # Mail API
 // API for sending Mail
-var _            = require('lodash').runInContext(),
+var _            = require('lodash'),
     Promise      = require('bluebird'),
     config       = require('../config'),
     canThis      = require('../permissions').canThis,
@@ -9,7 +9,7 @@ var _            = require('lodash').runInContext(),
     Models       = require('../models'),
     path         = require('path'),
     fs           = require('fs'),
-    templatesDir = path.resolve(__dirname, '..', 'mail', 'templates'),
+    templatesDir = path.resolve(__dirname, '..', 'email-templates'),
     htmlToText   = require('html-to-text'),
     mail;
 
@@ -79,7 +79,7 @@ mail = {
      *
      * @param {Object} options {
      *              data: JSON object representing the data that will go into the email
-     *              template: which email template to load (files are stored in /core/server/mail/templates/)
+     *              template: which email template to load (files are stored in /core/server/email-templates/)
      *          }
      * @returns {*}
      */
@@ -99,12 +99,12 @@ mail = {
                 }
 
                 // insert user-specific data into the email
-                var compiled = _.template(fileContent),
-                    htmlContent = compiled(emailData),
+                var htmlContent = _.template(fileContent, emailData),
                     textContent;
 
                 // generate a plain-text version of the same email
                 textContent = htmlToText.fromString(htmlContent);
+
                 resolve({
                     html: htmlContent,
                     text: textContent

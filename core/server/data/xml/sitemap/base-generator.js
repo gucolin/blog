@@ -136,10 +136,6 @@ _.extend(BaseSiteMapGenerator.prototype, {
 
     removeUrl: function (model) {
         var datum = model.toJSON();
-        // When the model is destroyed we need to fetch previousAttributes
-        if (!datum.id) {
-            datum = model.previousAttributes();
-        }
         this.removeFromLookups(datum);
 
         this.lastModified = Date.now();

@@ -4,23 +4,26 @@
 
 /*global require, module */
 
-var _           = require('lodash'),
-    api         = require('../api'),
+var moment      = require('moment'),
     rss         = require('../data/xml/rss'),
-    path        = require('path'),
-    config      = require('../config'),
-    errors      = require('../errors'),
-    filters     = require('../filters'),
+    _           = require('lodash'),
     Promise     = require('bluebird'),
+    api         = require('../api'),
+    config      = require('../config'),
+    filters     = require('../filters'),
     template    = require('../helpers/template'),
+    errors      = require('../errors'),
     routeMatch  = require('path-match')(),
-    safeString  = require('../utils/index').safeString,
+    path        = require('path'),
 
     frontendControllers,
-    staticPostPermalink = routeMatch('/:slug/:edit?');
+    staticPostPermalink;
+
+// Cache static post permalink regex
+staticPostPermalink = routeMatch('/:slug/:edit?');
 
 function getPostPage(options) {
-    return api.settings.read('postsPerPage').then(function then(response) {
+    return api.settings.read('postsPerPage').then(function (response) {
         var postPP = response.settings[0],
             postsPerPage = parseInt(postPP.value, 10);
 
@@ -59,12 +62,7 @@ function formatResponse(post) {
 }
 
 function handleError(next) {
-    return function handleError(err) {
-        // If we've thrown an error message of type: 'NotFound' then we found no path match.
-        if (err.errorType === 'NotFoundError') {
-            return next();
-        }
-
+    return function (err) {
         return next(err);
     };
 }
@@ -74,27 +72,25 @@ function setResponseContext(req, res, data) {
         pageParam = req.params.page !== undefined ? parseInt(req.params.page, 10) : 1,
         tagPattern = new RegExp('^\\/' + config.routeKeywords.tag + '\\/'),
         authorPattern = new RegExp('^\\/' + config.routeKeywords.author + '\\/'),
-        privatePattern = new RegExp('^\\/' + config.routeKeywords.private + '\\/'),
-        indexPattern = new RegExp('^\\/' + config.routeKeywords.page + '\\/'),
-        homePattern = new RegExp('^\\/$');
+        privatePattern = new RegExp('^\\/' + config.routeKeywords.private + '\\/');
 
     // paged context
     if (!isNaN(pageParam) && pageParam > 1) {
         contexts.push('paged');
     }
 
-    if (indexPattern.test(res.locals.relativeUrl)) {
+    if (req.route.path === '/' + config.routeKeywords.page + '/:page/') {
         contexts.push('index');
-    } else if (homePattern.test(res.locals.relativeUrl)) {
+    } else if (req.route.path === '/') {
         contexts.push('home');
         contexts.push('index');
-    } else if (/^\/rss\//.test(res.locals.relativeUrl)) {
+    } else if (/\/rss\/(:page\/)?$/.test(req.route.path)) {
         contexts.push('rss');
-    } else if (privatePattern.test(res.locals.relativeUrl)) {
+    } else if (privatePattern.test(req.route.path)) {
         contexts.push('private');
-    } else if (tagPattern.test(res.locals.relativeUrl)) {
+    } else if (tagPattern.test(req.route.path)) {
         contexts.push('tag');
-    } else if (authorPattern.test(res.locals.relativeUrl)) {
+    } else if (authorPattern.test(req.route.path)) {
         contexts.push('author');
     } else if (data && data.post && data.post.page) {
         contexts.push('page');
@@ -108,7 +104,7 @@ function setResponseContext(req, res, data) {
 // Add Request context parameter to the data object
 // to be passed down to the templates
 function setReqCtx(req, data) {
-    (Array.isArray(data) ? data : [data]).forEach(function forEach(d) {
+    (Array.isArray(data) ? data : [data]).forEach(function (d) {
         d.secure = req.secure;
     });
 }
@@ -123,7 +119,7 @@ function getActiveThemePaths() {
         context: {
             internal: true
         }
-    }).then(function then(response) {
+    }).then(function (response) {
         var activeTheme = response.settings[0],
             paths = config.paths.availableThemes[activeTheme.value];
 
@@ -138,8 +134,8 @@ function getActiveThemePaths() {
 * Returns a function that takes the post to be rendered.
 */
 function renderPost(req, res) {
-    return function renderPost(post) {
-        return getActiveThemePaths().then(function then(paths) {
+    return function (post) {
+        return getActiveThemePaths().then(function (paths) {
             var view = template.getThemeViewForPost(paths, post),
                 response = formatResponse(post);
 
@@ -161,8 +157,8 @@ function renderChannel(channelOpts) {
             filter, filterKey;
 
         // Add the slug if it exists in the route
-        if (channelOpts.route.indexOf(':slug') !== -1 && req.params.slug) {
-            options[channelOpts.name] = safeString(req.params.slug);
+        if (channelOpts.route.indexOf(':slug') !== -1) {
+            options[channelOpts.name] = req.params.slug;
             hasSlug = true;
         }
 
@@ -184,7 +180,7 @@ function renderChannel(channelOpts) {
             return res.redirect(createUrl());
         }
 
-        return getPostPage(options).then(function then(page) {
+        return getPostPage(options).then(function (page) {
             // If page is greater than number of pages we have, redirect to last page
             if (pageParam > page.meta.pagination.pages) {
                 return res.redirect(createUrl(page.meta.pagination.pages));
@@ -197,8 +193,8 @@ function renderChannel(channelOpts) {
                 setReqCtx(req, filter);
             }
 
-            filters.doFilter('prePostsRender', page.posts, res.locals).then(function then(posts) {
-                getActiveThemePaths().then(function then(paths) {
+            filters.doFilter('prePostsRender', page.posts, res.locals).then(function (posts) {
+                getActiveThemePaths().then(function (paths) {
                     var view = 'index',
                         result,
                         extra = {};
@@ -249,14 +245,14 @@ frontendControllers = {
         filter: 'author',
         slugTemplate: true
     }),
-    preview: function preview(req, res, next) {
+    preview: function (req, res, next) {
         var params = {
                 uuid: req.params.uuid,
                 status: 'all',
                 include: 'author,tags,fields'
             };
 
-        api.posts.read(params).then(function then(result) {
+        api.posts.read(params).then(function (result) {
             var post = result.posts[0];
 
             if (!post) {
@@ -271,25 +267,31 @@ frontendControllers = {
 
             filters.doFilter('prePostsRender', post, res.locals)
                 .then(renderPost(req, res));
-        }).catch(handleError(next));
+        }).catch(function (err) {
+            if (err.errorType === 'NotFoundError') {
+                return next();
+            }
+
+            return handleError(next)(err);
+        });
     },
 
-    single: function single(req, res, next) {
-        var postPath = req.path,
+    single: function (req, res, next) {
+        var path = req.path,
             params,
             usingStaticPermalink = false;
 
-        api.settings.read('permalinks').then(function then(response) {
-            var permalink = response.settings[0].value,
+        api.settings.read('permalinks').then(function (response) {
+            var permalink = response.settings[0],
                 editFormat,
                 postLookup,
                 match;
 
-            editFormat = permalink.substr(permalink.length - 1) === '/' ? ':edit?' : '/:edit?';
+            editFormat = permalink.value[permalink.value.length - 1] === '/' ? ':edit?' : '/:edit?';
 
             // Convert saved permalink into a path-match function
-            permalink = routeMatch(permalink + editFormat);
-            match = permalink(postPath);
+            permalink = routeMatch(permalink.value + editFormat);
+            match = permalink(path);
 
             // Check if the path matches the permalink structure.
             //
@@ -297,7 +299,7 @@ frontendControllers = {
             // need to verify it's not a static post,
             // and test against that permalink structure.
             if (match === false) {
-                match = staticPostPermalink(postPath);
+                match = staticPostPermalink(path);
                 // If there are still no matches then return.
                 if (match === false) {
                     // Reject promise chain with type 'NotFound'
@@ -316,9 +318,10 @@ frontendControllers = {
 
             // Query database to find post
             return api.posts.read(postLookup);
-        }).then(function then(result) {
+        }).then(function (result) {
             var post = result.posts[0],
-                postUrl = (params.edit) ? postPath.replace(params.edit + '/', '') : postPath;
+                slugDate = [],
+                slugFormat = [];
 
             if (!post) {
                 return next();
@@ -349,23 +352,64 @@ frontendControllers = {
                 if (post.page) {
                     return render();
                 }
+
                 return next();
             }
 
-            // Check if the url provided with the post object matches req.path
-            // If it does, render the post
-            // If not, return 404
-            if (post.url && post.url === postUrl) {
-                return render();
-            } else {
+            // If there is an author parameter in the slug, check that the
+            // post is actually written by the given author\
+            if (params.author) {
+                if (post.author.slug === params.author) {
+                    return render();
+                }
                 return next();
             }
-        }).catch(handleError(next));
+
+            // If there is any date based parameter in the slug
+            // we will check it against the post published date
+            // to verify it's correct.
+            if (params.year || params.month || params.day) {
+                if (params.year) {
+                    slugDate.push(params.year);
+                    slugFormat.push('YYYY');
+                }
+
+                if (params.month) {
+                    slugDate.push(params.month);
+                    slugFormat.push('MM');
+                }
+
+                if (params.day) {
+                    slugDate.push(params.day);
+                    slugFormat.push('DD');
+                }
+
+                slugDate = slugDate.join('/');
+                slugFormat = slugFormat.join('/');
+
+                if (slugDate === moment(post.published_at).format(slugFormat)) {
+                    return render();
+                }
+
+                return next();
+            }
+
+            return render();
+        }).catch(function (err) {
+            // If we've thrown an error message
+            // of type: 'NotFound' then we found
+            // no path match.
+            if (err.errorType === 'NotFoundError') {
+                return next();
+            }
+
+            return handleError(next)(err);
+        });
     },
     rss: rss,
-    private: function private(req, res) {
+    private: function (req, res) {
         var defaultPage = path.resolve(config.paths.adminViews, 'private.hbs');
-        return getActiveThemePaths().then(function then(paths) {
+        return getActiveThemePaths().then(function (paths) {
             var data = {};
             if (res.error) {
                 data.error = res.error;
