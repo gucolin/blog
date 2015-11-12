@@ -468,6 +468,8 @@ var util = {
       if (typeof data === 'string') data = new Buffer(data);
       var sliceFn = util.arraySliceFn(data);
       var isBuffer = Buffer.isBuffer(data);
+      //Identifying objects with an ArrayBuffer as buffers
+      if (util.isBrowser() && data && data.buffer instanceof ArrayBuffer) isBuffer = true;
 
       if (callback && typeof data === 'object' &&
           typeof data.on === 'function' && !isBuffer) {
@@ -607,7 +609,7 @@ var util = {
 
     if (typeof options === 'string') {
       err.message = options;
-    } else if (typeof options === 'object') {
+    } else if (typeof options === 'object' && options !== null) {
       util.update(err, options);
       if (options.message)
         err.message = options.message;
@@ -767,8 +769,39 @@ var util = {
       if (err) done(err);
       else done(null, sha);
     });
-  }
+  },
 
+  /**
+   * @api private
+   */
+  isClockSkewed: function isClockSkewed(serverTime) {
+    if (serverTime) {
+      util.property(AWS.config, 'isClockSkewed',
+        Math.abs(new Date().getTime() - serverTime) >= 300000, false);
+      return AWS.config.isClockSkewed;
+    }
+  },
+
+  applyClockOffset: function applyClockOffset(serverTime) {
+    if (serverTime)
+      AWS.config.systemClockOffset = serverTime - new Date().getTime();
+  },
+
+  /**
+   * @api private
+   */
+  extractRequestId: function extractRequestId(resp) {
+    var requestId = resp.httpResponse.headers['x-amz-request-id'] ||
+                     resp.httpResponse.headers['x-amzn-requestid'];
+
+    if (!requestId && resp.data && resp.data.ResponseMetadata) {
+      requestId = resp.data.ResponseMetadata.RequestId;
+    }
+
+    if (requestId) {
+      resp.requestId = requestId;
+    }
+  }
 };
 
 module.exports = util;
