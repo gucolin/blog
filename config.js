@@ -11,7 +11,19 @@ config = {
     // Configure your URL and mail settings here
     production: {
         url: 'http://my-ghost-blog.com',
-        mail: {},
+        mail: {
+            transport: 'SMTP',
+            options: {
+                host: 'email-smtp.us-west-2.amazonaws.com',
+                port: 465,
+                service: 'SES',
+                auth: {
+                    user: process.env.S3_SMTP_USERNAME,
+                    pass: process.env.S3_SMTP_PASSWORD
+                }
+            }
+        },
+
         database: {
             client: 'postgres',
             connection: {

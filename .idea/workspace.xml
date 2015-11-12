@@ -2,73 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7d508ed-2eb2-4397-9f4d-b5d7e66aec3f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cloudfront-2015-04-17.min.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cloudfront-2015-04-17.paginators.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cloudfront-2015-04-17.waiters.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/ec2-2015-04-15.min.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/ec2-2015-04-15.paginators.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/ec2-2015-04-15.waiters.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/efs-2015-02-01.min.json" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/README.md" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/README.md" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/autoscaling-2011-01-01.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/autoscaling-2011-01-01.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/dist/aws-sdk.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/dist/aws-sdk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/dist/aws-sdk.min.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/dist/aws-sdk.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/json/builder.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/json/builder.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cloudformation-2010-05-15.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cloudformation-2010-05-15.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cloudtrail-2013-11-01.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cloudtrail-2013-11-01.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/codepipeline-2015-07-09.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/codepipeline-2015-07-09.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cognito-identity-2014-06-30.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cognito-identity-2014-06-30.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cognito-sync-2014-06-30.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/cognito-sync-2014-06-30.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/credentials/cognito_identity_credentials.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/credentials/cognito_identity_credentials.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/config-2014-11-12.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/config-2014-11-12.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/config.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/scripts/console" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/scripts/console" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/core.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/core.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/devicefarm-2015-06-23.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/devicefarm-2015-06-23.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/devicefarm-2015-06-23.paginators.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/devicefarm-2015-06-23.paginators.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/services/dynamodb.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/services/dynamodb.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/ecs-2014-11-13.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/ecs-2014-11-13.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/email-2010-12-01.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/email-2010-12-01.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/event_listeners.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/event_listeners.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/iam-2010-05-08.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/iam-2010-05-08.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/importexport-2010-06-01.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/importexport-2010-06-01.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/index.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/when/keys.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/when/keys.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/kinesis-2013-12-02.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/kinesis-2013-12-02.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/kms-2014-11-01.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/kms-2014-11-01.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/lambda-2015-03-31.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/lambda-2015-03-31.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/logs-2014-03-28.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/logs-2014-03-28.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/logs-2014-03-28.paginators.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/logs-2014-03-28.paginators.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/machinelearning-2014-12-12.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/machinelearning-2014-12-12.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/s3/managed_upload.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/s3/managed_upload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/metadata.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/metadata.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/opsworks-2013-02-18.paginators.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/opsworks-2013-02-18.paginators.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/package.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/package.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/node_modules/xmlbuilder/package.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/node_modules/xmlbuilder/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/when/package.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/when/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/json/parser.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/json/parser.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/signers/presign.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/signers/presign.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/rds-2014-10-31.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/rds-2014-10-31.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/region_config.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/region_config.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/protocol/rest.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/protocol/rest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/protocol/rest_json.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/protocol/rest_json.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/route53-2013-04-01.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/route53-2013-04-01.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/s3-2006-03-01.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/s3-2006-03-01.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/services/s3.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/services/s3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/dist-tools/service-collector.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/dist-tools/service-collector.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/service.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/sqs-2012-11-05.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/sqs-2012-11-05.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/ssm-2014-11-06.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/ssm-2014-11-06.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/storagegateway-2013-06-30.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/storagegateway-2013-06-30.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/sts-2011-06-15.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/sts-2011-06-15.min.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/credentials/temporary_credentials.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/credentials/temporary_credentials.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/util.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/signers/v4.js" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/lib/signers/v4.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config.example.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.js" afterPath="$PROJECT_DIR$/config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/workspaces-2015-04-08.min.json" afterPath="$PROJECT_DIR$/node_modules/ghost-s3-storage/node_modules/aws-sdk/apis/workspaces-2015-04-08.min.json" />
     </list>
     <ignored path="Blog.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -125,7 +61,7 @@
       <file leaf-file-name="config.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.64254063">
+            <state vertical-scroll-proportion="0.0">
               <caret line="29" column="45" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -252,7 +188,47 @@
     <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="JsTestDriver-test-runner" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="Chrome" />
+      <method />
+    </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <method />
     </configuration>
   </component>
@@ -271,9 +247,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -309,6 +285,43 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="101" column="15" selection-start-line="101" selection-start-column="15" selection-end-line="101" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Procfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/storage/ghost-s3/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -399,7 +412,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64254063">
+        <state vertical-scroll-proportion="0.0">
           <caret line="29" column="45" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
