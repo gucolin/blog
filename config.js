@@ -12,6 +12,7 @@ config = {
     production: {
         url: 'http://my-ghost-blog.com',
         mail: {
+            from: '"Colin Gu" <chaoliag@gmail.com>',
             transport: 'SMTP',
             options: {
                 host: 'email-smtp.us-west-2.amazonaws.com',
